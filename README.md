@@ -4,7 +4,7 @@ Simplifies basic crud operations when using the Go App Engine Datastore.
 
 # How to use
 
-1. Define your structs
+1.Define your structs
 ```go
     type Dog struct {
         ID int64
@@ -14,7 +14,7 @@ Simplifies basic crud operations when using the Go App Engine Datastore.
     }
 ```
 
-2. Implement `Entity` interface. It's up to you how and what values to use for your `datastore.Key`
+2.Implement `Entity` interface. It's up to you how and what values to use for your `datastore.Key`
 ```go
 
 func (d Dog) Key(ctx context.Context) *datastore.Key {
@@ -25,7 +25,7 @@ func (d Dog) Key(ctx context.Context) *datastore.Key {
 }
 ```
 
-3. Implement `Preparer` interface (optional). This is executed after your entity is retrieved. Put any
+3.Implement `Preparer` interface (optional). This is executed after your entity is retrieved. Put any
 post processing logic like setting your struct to store the `int` or `string` id from the key
 ```go
 func (d *Dog) Prepare(key *datastore.Key) {
@@ -33,7 +33,7 @@ func (d *Dog) Prepare(key *datastore.Key) {
 }
 ```
 
-4. Implement `BeforePutter` interface (optional). This is executed before your entity is saved
+4.Implement `BeforePutter` interface (optional). This is executed before your entity is saved
 ```go
 func (d *Dog) BeforePut() error {
     d.Modified = time.Now()
@@ -41,7 +41,7 @@ func (d *Dog) BeforePut() error {
 }
 ```
 
-5. Start using it!
+5.Start using it!
 ```go
 // Put
 dog := Dog{Name: "Winston", Age: 2}
