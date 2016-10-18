@@ -75,6 +75,27 @@ func RunQuery(ctx context.Context, q *datastore.Query, entities interface{}) (da
 	return t.Cursor()
 }
 
+// KeysOnly queries and only retrieves entity keys
+func KeysOnly(ctx context.Context, q *datastore.Query) (keys []*datastore.Key, cursor datastore.Cursor, err error) {
+	// Ensure keys only
+	q = q.KeysOnly()
+
+	t := q.Run(ctx)
+	for {
+		key, err := t.Next(nil)
+		if err == datastore.Done {
+			break
+		}
+		if err != nil {
+			break
+		}
+		keys = append(keys, key)
+		cursor, _ = t.Cursor()
+	}
+
+	return keys, cursor, err
+}
+
 func prepare(key *datastore.Key, entity Entity) {
 	if prep, ok := entity.(EntityPreparer); ok {
 		prep.Prepare(key)
